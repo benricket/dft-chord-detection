@@ -7,6 +7,7 @@ import matplotlib.colors
 
 SAMPLE_INDEX_OFFSET = 0 # For every peak diff, assume our note is prominent this many samples later
 DO_LOGGING = False
+SHOW_DFT_PLOT = True # should we visualize a single time window DFT result? 
 ARPEGGIO_THRESH = 0.25 # seconds
 ARPEGGIO_THRESH_STEPS = 20
 
@@ -103,6 +104,13 @@ def main(path: str):
         # Get note names for identified frequencies
         notes = librosa.hz_to_note(freq_peaks)
         chords[seconds_rounded] = notes
+
+    if SHOW_DFT_PLOT:
+        plt.plot(freq,chord_freqs)
+        plt.title("DFT result of a specific chord")
+        plt.xlabel("Frequency component (Hz)")
+        plt.ylabel("Magnitude (unitless)")
+        plt.show()
 
     if DO_LOGGING:
         print(f"Peaks: {peaks}")
